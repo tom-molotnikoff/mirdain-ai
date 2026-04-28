@@ -1,0 +1,19 @@
+# mirdain.yaml — local operator configuration
+# Copy this file to mirdain.yaml and fill in your values.
+# mirdain.yaml is gitignored — never commit secrets.
+#
+#   cp mirdain.yaml.example mirdain.yaml
+
+server:
+  bind: 127.0.0.1
+  port: 7777
+
+# TODO(#3): replace PAT with a GitHub App installation token.
+# Set MIRDAIN_GITHUB_TOKEN to a personal access token with repo scope,
+# or paste the token value directly (not recommended on shared machines).
+github_app:
+  pat: "${MIRDAIN_GITHUB_TOKEN}"
+
+repos:
+  - id: "github.com/your-org/your-repo"
+    enabled: true
