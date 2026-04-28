@@ -64,7 +64,7 @@ func Load(path string) (*Config, error) {
 	data, err := os.ReadFile(path)
 	if err != nil {
 		if os.IsNotExist(err) {
-			return nil, fmt.Errorf("config file not found at %q — create mirdain.yaml before running mirdain (see README for an example)", path)
+			return nil, fmt.Errorf("config file not found at %q — copy mirdain.yaml.example to mirdain.yaml and fill in your values", path)
 		}
 		return nil, fmt.Errorf("reading config file %q: %w", path, err)
 	}
