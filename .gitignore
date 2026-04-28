@@ -9,9 +9,13 @@ coverage.html
 
 # Node
 ui/node_modules/
+agent/node_modules/
 
 # SPA build output
 ui/dist/
+
+# Agent bridge build output
+agent/dist/
 
 # Editor
 .DS_Store

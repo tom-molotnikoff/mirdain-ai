@@ -1,3 +1,12 @@
+# Build stage: compile the mirdain-bridge TypeScript module.
+FROM node:20-slim AS bridge-builder
+WORKDIR /agent
+COPY agent/package.json ./
+RUN npm install
+COPY agent/ ./
+RUN npm run build
+
+# Runtime image.
 FROM node:20-slim
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -15,12 +24,14 @@ RUN curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg \
     && apt-get update && apt-get install -y --no-install-recommends gh \
     && rm -rf /var/lib/apt/lists/*
 
-# TODO(#21): install Pi (badlogic/pi-mono) and the mirdain-bridge extension.
-# Example (version must be pinned once decided):
-#   RUN npm install -g <pi-package>
-#   COPY agent/dist/ /app/bridge/
+# Copy the compiled bridge and its runtime dependencies.
+COPY --from=bridge-builder /agent/dist /app/dist
+COPY --from=bridge-builder /agent/node_modules /app/node_modules
 
 # Directory layout required by the container spec (see #1).
 RUN mkdir -p /workspace /run/secrets /skills
 
 WORKDIR /workspace
+
+# Requires MIRDAIN_RUN_ID, MIRDAIN_RUN_SECRET, and MIRDAIN_ORCHESTRATOR_URL.
+CMD ["node", "/app/dist/bridge.js"]

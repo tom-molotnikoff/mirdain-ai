@@ -1,4 +1,4 @@
-.PHONY: build ui-build run test image e2e
+.PHONY: build ui-build agent-build run test image e2e
 
 BIN := bin/mirdain
 
@@ -8,6 +8,9 @@ build: ui-build
 
 ui-build:
 	cd ui && npm install && npm run build
+
+agent-build:
+	cd agent && npm install && npm run build
 
 run: build
 	./$(BIN)
