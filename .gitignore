@@ -10,9 +10,8 @@ coverage.html
 # Node
 ui/node_modules/
 
-# SPA build output — placeholder ui/dist/index.html is tracked; generated assets are not
-ui/dist/*
-!ui/dist/index.html
+# SPA build output
+ui/dist/
 
 # Editor
 .DS_Store
